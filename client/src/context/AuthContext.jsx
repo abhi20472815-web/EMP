@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set API Base URL - defaults to local express server
-  const API_BASE = 'http://localhost:5000/api';
+  // Set API Base URL - supports environment configuration in production
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
   // Fetch logged in user profile when token changes
   useEffect(() => {
