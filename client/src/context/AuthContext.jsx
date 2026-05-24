@@ -8,8 +8,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set API Base URL - supports environment configuration in production
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  // Set API Base URL - robustly handles Vercel env configs that omit the '/api' suffix
+  const rawApiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  const API_BASE = rawApiBase.trim().endsWith('/api') ? rawApiBase.trim() : `${rawApiBase.trim()}/api`;
 
   // Fetch logged in user profile when token changes
   useEffect(() => {
