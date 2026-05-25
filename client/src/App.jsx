@@ -12,6 +12,7 @@ import Attendance from './pages/Attendance';
 const AppContent = () => {
   const { user, token, loading } = useAuth();
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('aura-theme') || 'dark';
   });
@@ -123,12 +124,30 @@ const AppContent = () => {
       <div className="floating-blob blob-primary"></div>
       <div className="floating-blob blob-secondary"></div>
 
+      {/* Mobile Sidebar Overlay Backdrop */}
+      {isSidebarOpen && (
+        <div 
+          className="sidebar-backdrop" 
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Persistent Left Sidebar */}
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        isOpen={isSidebarOpen} 
+        setIsOpen={setIsSidebarOpen}
+      />
 
       {/* Right Content Column */}
       <div className="main-content">
-        <Navbar activeTab={activeTab} theme={theme} toggleTheme={toggleTheme} />
+        <Navbar 
+          activeTab={activeTab} 
+          theme={theme} 
+          toggleTheme={toggleTheme} 
+          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
         {renderActiveView()}
       </div>
     </div>

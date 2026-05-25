@@ -11,7 +11,7 @@ import {
   Clock
 } from 'lucide-react';
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
 
   if (!user) return null;
@@ -61,8 +61,13 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       .toUpperCase();
   };
 
+  const handleItemSelect = (tabId) => {
+    setActiveTab(tabId);
+    if (setIsOpen) setIsOpen(false); // Close sidebar on mobile upon tap
+  };
+
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-logo">
         <div className="logo-icon">
           <ShieldAlert size={20} color="white" />
@@ -82,7 +87,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             <li key={item.id}>
               <button
                 className={`sidebar-item ${isActive ? 'active' : ''}`}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => handleItemSelect(item.id)}
                 style={{ 
                   width: '100%', 
                   background: 'none', 

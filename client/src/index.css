@@ -1171,3 +1171,147 @@ button, input, select, textarea {
   color: var(--accent-primary);
   background: var(--sidebar-item-hover-bg);
 }
+
+/* --- Hamburger Menu & Navbar Responsive Helpers --- */
+.sidebar-toggle {
+  display: none;
+}
+
+.nav-user-details {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.nav-user-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.nav-user-role {
+  font-size: 0.75rem;
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+/* Mobile Sidebar Backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(5, 8, 16, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1050;
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* --- Responsive Media Queries --- */
+
+/* Medium Screens & Tablets (Laptops under 1024px) */
+@media (max-width: 1024px) {
+  .sidebar-toggle {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1100;
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    transition: transform var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .navbar {
+    padding: 0 1.5rem;
+  }
+
+  .content-viewport {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Small Screens & Mobile (under 768px) */
+@media (max-width: 768px) {
+  .navbar {
+    height: 72px;
+  }
+
+  .nav-date {
+    display: none;
+  }
+
+  .nav-title {
+    font-size: 1.2rem;
+  }
+
+  .nav-actions {
+    gap: 0.75rem;
+  }
+
+  .content-viewport {
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+  }
+
+  .stat-card-value {
+    font-size: 1.85rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .modal-close {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  /* Compact button styling on small screens */
+  .btn {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Extra Small Screens (under 640px) */
+@media (max-width: 640px) {
+  .nav-user-details {
+    display: none; /* Hide user names in nav header to prevent collision */
+  }
+
+  .login-card {
+    padding: 2.25rem 1.5rem;
+    max-width: 90%;
+    margin: 1rem;
+  }
+
+  .login-title {
+    font-size: 1.85rem;
+  }
+}

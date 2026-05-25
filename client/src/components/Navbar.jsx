@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Bell, Sun, Moon } from 'lucide-react';
+import { Bell, Sun, Moon, Menu } from 'lucide-react';
 
-const Navbar = ({ activeTab, theme, toggleTheme }) => {
+const Navbar = ({ activeTab, theme, toggleTheme, toggleSidebar }) => {
   const { user, authFetch } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +79,8 @@ const Navbar = ({ activeTab, theme, toggleTheme }) => {
         return 'Leave Planner';
       case 'performance':
         return 'Performance Audits';
+      case 'attendance':
+        return 'Attendance Tracker';
       default:
         return 'Employee Portal';
     }
@@ -92,13 +94,24 @@ const Navbar = ({ activeTab, theme, toggleTheme }) => {
 
   return (
     <nav className="navbar">
-      <div>
-        <h2 className="nav-title" style={{ fontFamily: 'var(--font-heading)' }}>
-          {getTitle()}
-        </h2>
-        <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.2rem' }}>
-          {formatDate()}
-        </p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {/* Mobile Sidebar Hamburger Toggle */}
+        <button 
+          className="btn-icon-only sidebar-toggle" 
+          onClick={toggleSidebar}
+          title="Toggle Navigation Menu"
+        >
+          <Menu size={20} />
+        </button>
+
+        <div>
+          <h2 className="nav-title" style={{ fontFamily: 'var(--font-heading)' }}>
+            {getTitle()}
+          </h2>
+          <p className="nav-date" style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.2rem' }}>
+            {formatDate()}
+          </p>
+        </div>
       </div>
 
       <div className="nav-actions">
@@ -168,11 +181,11 @@ const Navbar = ({ activeTab, theme, toggleTheme }) => {
         </button>
 
         {user && (
-          <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'right' }}>
-            <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>
+          <div className="nav-user-details">
+            <span className="nav-user-name">
               Welcome, {user?.name ? user.name.split(' ')[0] : 'User'}!
             </span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--accent-color)', fontWeight: 500 }}>
+            <span className="nav-user-role">
               {user.designation}
             </span>
           </div>
